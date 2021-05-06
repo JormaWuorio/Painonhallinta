@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/admin/Documents/GitHub/Painonhallinta/painonhallinta.db" readonly="0" foreign_keys="" case_sensitive_like="" temp_store="" wal_autocheckpoint="" synchronous=""/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1755"/><column_width id="4" width="0"/></tab_structure><tab_browse><current_table name="0,0:"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="Henkilön_viimeiset_tiedot.sql">CREATE VIEW	henkilon_viimeiset_tiedot AS
+SELECT etunimi, sukunimi, sukupuoli, pituus, paino, ika
+FROM henkilon_viimeisin_mittaus INNER JOIN henkilo_mittaus_ika_v2 ON henkilon_viimeisin_mittaus.viimeisin_mittaus_id = henkilo_mittaus_ika_v2.mittaus_id
+
+</sql><sql name="Henkilönviimeinenmittausid.sql">DROP VIEW &quot;main&quot;.&quot;henkilon_viimeisin_mittaus&quot;;
+CREATE VIEW henkilon_viimeisin_mittaus AS
+SELECT henkilo_id, max(mittaus_id) AS viimeisin_mittaus_id
+FROM henkilo_mittaus_ika_v2
+GROUP BY henkilo_id</sql><current_tab id="0"/></tab_sql></sqlb_project>

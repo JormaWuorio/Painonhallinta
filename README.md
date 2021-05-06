@@ -1,2 +1,2 @@
 # Painonhallinta
-Python painonhallintasovellus
+Esimerkkisovellus Python-sovellusten suunnittelusta ja toteutuksesta

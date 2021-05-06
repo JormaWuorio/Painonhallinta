@@ -16,7 +16,7 @@ def liukuluvuksi(syote):
 
     # Selvitetään sisältääko syöte mahdollisen desimaalipilkun ja korvataan se pisteellä
     if syote.find(',') != -1:
-        syote.replace(',', '.')
+        syote = syote.replace(',', '.')
 
     # Selvitetään sisältääkö syöte desimaalipisteen ja jaetaan syöte pisteen kohdalta useammaksi merkkijonoksi
     if syote.find('.') != -1:
@@ -58,34 +58,74 @@ def liukuluvuksi(syote):
     paluuarvo = [virhekoodi, virhesanoma, arvo]
     return paluuarvo
 
+    
+# Funktio, jolla tarkistetaan, että syötetty arvo on haluttujen rajojen sisällä
 def rajatarkistus(arvo, alaraja, ylaraja):
-    """Tarkistaa että syötetty arvo on suurempi tai yhtäsuuri kuin alaraja ja pienempi tai yhtäsuuri kuin ylaraja
-
+    """Tarkistaa, että syötetty arvo on suurempi tai yhtäsuuri kuin alaraja ja pienempi tai yhtäsuuri kuin yläraja
     Args:
         arvo (float): tarkistettava arvo
         alaraja (float): pienin sallittu arvo
         ylaraja (float): suurin sallittu arvo
-
     Returns:
         list: virhekoodi, virheilmoitus
-
     """
+    # Määritellään virheiden oletusarvot
+    virhekoodi = 0
+    virhesanoma = 'Arvo OK'
 
-
-
-    if arvo >= alaraja and arvo <= ylaraja:
-        virhekoodi = 0
-        virhesanoma = "Arvo OK"
-        paluuarvo = [virhekoodi, virhesanoma]
-    
-    elif arvo < alaraja:
+    # Arvo alle alarajan
+    if arvo < alaraja:
         virhekoodi = 1
-        virhesanoma = "Arvo alle alarajan"
-        paluuarvo = [virhekoodi, virhesanoma]
-    
-    elif arvo > ylaraja:
+        virhesanoma = 'Arvo on alle alarajan'
+        
+    # Arvo yli ylärajan
+    if arvo > ylaraja:
         virhekoodi = 2
-        virhesanoma = "Arvo yli ylärajan"
-        paluuarvo = [virhekoodi, virhesanoma]
+        virhesanoma = 'Arvo on yli ylärajan'
 
+    # Paluuarvon määritys ja palautus
+    paluuarvo = [virhekoodi, virhesanoma]
     return paluuarvo
+
+# Funktioiden testaus
+if __name__ == '__main__':
+    
+    # 1. Syötteen tarkistus, syöte oikein
+    syote = '123.5'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+
+    # 2. Syötteessä desimaalipilkku, muuten oikein
+    syote = '123,5'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+
+    # 3. Syötteessä useita osia
+    syote = '12.3.2'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+
+    # 4. Syöttessä alussa tekstiä 
+    syote = 'paino 75.4'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+
+    # 5. Syötteen lopussa tekstiä
+    syote = '75.4 kg'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+    # Syöte kokonaisuudessaan tekstiä
+    syote = 'sataviisi'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+    
+    # Rajatarkistukset
+
+    alaraja = 1
+    ylaraja = 3
+
+    # 1. Rajojen sisällä
+    arvo = 1.8
+    print('Arvo:', arvo, 'Tulokset:', rajatarkistus(arvo, alaraja, ylaraja))
+
+    # 2. Alle alarajan
+    arvo = 0.8
+    print('Arvo:', arvo, 'Tulokset:', rajatarkistus(arvo, alaraja, ylaraja))
+
+    # 3. Yli ylärajan
+    arvo = 4
+    print('Arvo:', arvo, 'Tulokset:', rajatarkistus(arvo, alaraja, ylaraja))
